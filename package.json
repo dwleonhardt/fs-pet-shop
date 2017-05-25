@@ -2,7 +2,7 @@
   "name": "fs-pet-store",
   "version": "0.1.0",
   "description": "A small server app to demonstrate CRUD over an HTTP API",
-  "main": "restfulExpressServer.js",
+  "main": "expressServer.js",
   "scripts": {
     "lint": "eslint",
     "start": "nodemon",
@@ -26,8 +26,7 @@
   "homepage": "https://github.com/gSchool/fs-pet-shop#readme",
   "dependencies": {
     "express": "^4.15.3",
-    "nodemon": "^1.9.1",
-    "router": "^1.3.1"
+    "nodemon": "^1.9.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -36,8 +35,5 @@
     "mocha": "^3.0.2",
     "mock-fs": "^3.11.0",
     "supertest": "^2.0.0"
-  },
-  "directories": {
-    "test": "test"
   }
 }
