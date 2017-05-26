@@ -5,7 +5,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const morgan = require('morgan');
-var pets = JSON.parse(fs.readFileSync('pets.json', 'utf8'));
+
 
 
 
@@ -30,7 +30,7 @@ router.get('/:id', function(req, res, next){
 });
 
 router.post('/', jsonParser, function(req, res, next){
-
+  var pets = JSON.parse(fs.readFileSync('pets.json', 'utf8'));
   if(req.body.name.length > 0){
     var nameVal = req.body.name;
     var ageVal = parseInt(req.body.age);
@@ -55,19 +55,40 @@ router.post('/', jsonParser, function(req, res, next){
     res.sendStatus(400);
   }
 });
-
 router.patch('/:id', jsonParser, function(req, res, next){
-      if (typeof req.body === 'object') {
-        var id = req.params.id;
-        pets[id] = req.body;
-        // console.log(pets);
-        res.send(req.body);
-        // console.log(req.params.id);
-        console.log(req.body);
-      }
-      else {
-        res.sendStatus(404);
-      }
+  var pets = JSON.parse(fs.readFileSync('pets.json', 'utf8'));
+  var id = req.params.id;
+  for (var key in req.body) {
+    pets[id][key] = req.body[key];
+  }
+  var update = JSON.stringify(pets);
+  fs.writeFile('./pets.json', update, function(err){
+    if(err){
+      throw err;
+    }
+    res.send(pets[id]);
+  });
+
+
+  // console.log(pets[id]);
+});
+
+router.delete('/:id', jsonParser, function(req, res, next){
+  var pets = JSON.parse(fs.readFileSync('pets.json', 'utf8'));
+  var id = req.params.id;
+  var remove = pets[id];
+  pets.splice(id, 1);
+  console.log(pets);
+  var update = JSON.stringify(pets);
+  fs.writeFile('./pets.json', update, function(err){
+    if(err){
+      throw err;
+    }
+    res.send(remove);
+  });
+
+
+  // console.log(pets[id]);
 });
 
 
